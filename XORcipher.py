@@ -1,19 +1,42 @@
-def XORcipher(text,key):
-	
-	encrypted_text = ""
+import os
+import random
 
-	for i in range(len(text)):
+def cipher(l):
+	cip = ""
+	lg = len(key)
+	t = ""
+	for i in range(len(l)):
+		t+= chr(ord(l[i])^ord(key[i%lg]))
 
-		encrypted_text += chr(ord(text[i]) ^ ord(key))
+	return t
 
-	return  encrypted_text
+key = ""
+while len(key) < 1:
+	key = input('Enter Password: ')
 
-text = input('Enter message to encrypt or decrypt : ')
+path = input('Enter Folder Path: ')
 
-key = input('Enter a key : ')
-
-
-print(XORcipher(text,key))
+F = []
+files = os.listdir(path)
+cur_path = os.path.dirname(__file__)
+path = os.path.join(cur_path , path)
+for file in files:
+	p = os.path.join(path , file)
+	if file.endswith('.txt'):
+		with open(p,'r') as f:
+			l = f.read()
+			l = cipher(l)
+			print(str(l))
+			F.append(l)
+			# l = cipher(l)
+			
+for file in files:
+	p = os.path.join(path , file)
+	if file.endswith('.txt'):
+		with open(p,'w') as f:
+			f.truncate(0)
+			f.write(F[0])
+			F.pop(0))
 
 '''
 
